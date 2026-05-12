@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rating Food</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #000000;
+            --gray: #1f1f1f;
+            --yellow: #ffd400;
+            --blue: #3b82f6;
+            --white: #ffffff;
+        }
+
+        *, *::after, *::before {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            border: none;
+            outline: none;
+            text-decoration: none;
+            list-style-type: none;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: #f0f2f5;
+            color: #111;
+            overflow-x: hidden;
+        }
+
+        /* ── HEADER ── */
+        header {
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            background: rgba(20, 20, 30, 0.85);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 48px;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .header__logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 0.02em;
+        }
+
+        .header__logo svg { width: 32px; height: 32px; }
+
+        .navigation {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .navigation__item { display: inline; }
+
+        .navigation__link {
+            color: rgba(255,255,255,0.8);
+            font-family: 'Raleway', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.2s, background 0.2s;
+            padding: 6px 10px;
+            border-radius: 6px;
+        }
+
+        .navigation__link:hover {
+            color: #111;
+            background: rgba(255,255,255,0.92);
+        }
+
+        /* ── COVER ── */
+        .cover {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #3b1fe8 0%, #2d6ff0 40%, #00c6ff 100%);
+            padding: 60px 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 70% 50%, rgba(255,255,255,0.08) 0%, transparent 60%);
+        }
+
+        .cover__text {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 18px;
+            z-index: 1;
+        }
+
+        .cover__text h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(72px, 10vw, 120px);
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.05;
+            animation: fadeUp 0.9s ease both;
+        }
+
+        .cover__text p {
+            font-size: 22px;
+            color: rgba(255,255,255,0.75);
+            line-height: 1.6;
+            max-width: 600px;
+            animation: fadeUp 0.9s 0.15s ease both;
+        }
+
+        .cover-btns {
+            display: flex;
+            gap: 16px;
+            animation: fadeUp 0.9s 0.3s ease both;
+        }
+
+        .cover-btns a {
+            padding: 20px 52px;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .cover__top {
+            background: rgba(255,255,255,0.18);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.4);
+            backdrop-filter: blur(8px);
+        }
+
+        .cover__top:hover {
+            background: rgba(255,255,255,0.35);
+            transform: translateY(-2px);
+        }
+
+        .cover__places {
+            background: #fff;
+            color: var(--blue);
+        }
+
+        .cover__places:hover {
+            background: #e8f0ff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(59,130,246,0.3);
+        }
+
+        /* ── SECTION BASE ── */
+        section {
+            padding: 80px 48px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(32px, 4vw, 52px);
+            font-weight: 800;
+            color: var(--gray);
+            margin-bottom: 40px;
+        }
+
+        /* ── STORY ── */
+        .story { background: #fff; }
+
+        .story > .container {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .story__text {
+            text-align: center;
+        }
+
+        .story__text h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(28px, 4vw, 48px);
+            font-weight: 800;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+
+        .story__text p {
+            font-size: 16px;
+            color: #666;
+            max-width: 600px;
+            margin: auto;
+            line-height: 1.6;
+        }
+
+        .story__carousel { overflow-x: hidden; }
+
+        .carousel__track {
+            display: flex;
+            align-items: center;
+        }
+
+        .carousel__item {
+            margin-right: 24px;
+            flex-shrink: 0;
+        }
+
+        .carousel__item img {
+            width: 260px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        /* ── PLACES ── */
+        .places { background: #f0f2f5; }
+
+        .tab-buttons {
+            display: flex;
+            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 32px;
+            gap: 0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            padding: 14px 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            color: #888;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .tab-btn:hover { color: var(--gray); }
+        .tab-btn.active { color: var(--gray); border-bottom-color: var(--gray); }
+
+        .slider { overflow: hidden; }
+
+        .track {
+            display: flex;
+            transition: 0.6s cubic-bezier(.77,0,.18,1);
+        }
+
+        .slide { min-width: 100%; }
+
+        /* ── CARDS GRID ── */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 48px rgba(0,0,0,0.14);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            background: linear-gradient(135deg, #c8d8f0, #a0b8e0);
+        }
+
+        .card-body { padding: 18px 20px; }
+
+        .card-body h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--gray);
+            margin-bottom: 6px;
+        }
+
+        .rating { margin-bottom: 6px; font-size: 15px; }
+
+        .card-body p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+            margin-top: 4px;
+        }
+
+        /* ── REVIEWS ── */
+        .reviews { background: #fff; }
+
+        .review-block { margin-bottom: 40px; }
+
+        .review {
+            background: #f8fafc;
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            transition: transform 0.3s;
+        }
+
+        .review:hover { transform: translateX(8px); }
+
+        .review__person {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: #ddd;
+        }
+
+        .reviews__text p { font-size: 14px; color: #444; line-height: 1.5; }
+
+        /* ── TOP ── */
+        .top { background: #f0f2f5; }
+
+        .top-medal {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gray);
+            margin-bottom: 12px;
+            margin-top: 32px;
+        }
+
+        .top-medal:first-of-type { margin-top: 0; }
+
+        /* ── ADVERTISING ── */
+        .advertising { background: linear-gradient(135deg, #1f1f1f, #3b82f6); }
+
+        .advertising .section-title { color: #fff; text-align: center; }
+
+        .advertising .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .ad-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 540px;
+            align-items: stretch;
+        }
+
+        .ad-form input,
+        .ad-form textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            font-family: 'Raleway', sans-serif;
+            font-size: 15px;
+            transition: border-color 0.3s, background 0.3s;
+        }
+
+        .ad-form input::placeholder,
+        .ad-form textarea::placeholder { color: rgba(255,255,255,0.5); }
+
+        .ad-form input:focus,
+        .ad-form textarea:focus {
+            border-color: rgba(255,255,255,0.6);
+            background: rgba(255,255,255,0.18);
+        }
+
+        .ad-form textarea { min-height: 120px; resize: vertical; }
+
+        .ad-form button {
+            align-self: center;
+            background: #ffffff;
+            color: #222;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            padding: 13px 52px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .ad-form button:hover {
+            background: #e8f0ff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255,255,255,0.25);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: #111;
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            padding: 28px;
+            font-size: 14px;
+        }
+
+        /* ── MODAL ── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10,10,20,0.0);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.35s;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+            background: rgba(10,10,20,0.72);
+        }
+
+        .modal {
+            background: #fff;
+            border-radius: 20px;
+            max-width: 620px;
+            width: 90%;
+            max-height: 88vh;
+            overflow-y: auto;
+            box-shadow: 0 32px 80px rgba(0,0,0,0.3);
+            transform: scale(0.88) translateY(30px);
+            opacity: 0;
+            transition: transform 0.38s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease;
+        }
+
+        .modal-overlay.open .modal {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .modal-img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            display: block;
+            background: linear-gradient(135deg, #c8d8f0, #a0b8e0);
+        }
+
+        .modal-body { padding: 28px 32px 32px; }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .modal-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--gray);
+        }
+
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+
+        .modal-close:hover { background: #e0e0e0; }
+
+        .modal-rating { font-size: 20px; margin-bottom: 10px; }
+
+        .modal-meta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .modal-tag {
+            background: #f0f4ff;
+            color: var(--blue);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .modal-desc {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .modal-section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 12px;
+        }
+
+        .modal-reviews .review {
+            background: #f8fafc;
+            margin-bottom: 10px;
+        }
+
+        /* ── REVEAL ANIMATION ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ══════════════════════════════════════
+           QHD / 2K  (≥ 2560px)
+        ══════════════════════════════════════ */
+        @media (min-width: 2560px) {
+            .container { max-width: 1800px; }
+
+            header { padding: 18px 80px; }
+            .header__logo { font-size: 26px; }
+            .header__logo svg { width: 40px; height: 40px; }
+            .navigation { gap: 40px; }
+            .navigation__link { font-size: 18px; }
+
+            .cover { padding: 80px 80px; }
+            .cover__text h1 { font-size: clamp(100px, 7vw, 140px); }
+            .cover__text p  { font-size: 26px; max-width: 800px; }
+            .cover-btns a   { font-size: 22px; padding: 22px 60px; }
+
+            section { padding: 120px 80px; }
+            .section-title { font-size: 64px; }
+
+            .card-body h4   { font-size: 22px; }
+            .card-body p    { font-size: 17px; }
+            .card img,
+            .card > div:first-child { height: 280px !important; }
+
+            .tab-btn { font-size: 18px; padding: 18px 24px; }
+
+            .review { padding: 22px 28px; }
+            .review__person { width: 58px; height: 58px; }
+            .reviews__text p { font-size: 17px; }
+
+            .top-medal { font-size: 22px; }
+
+            .ad-form { max-width: 700px; }
+            .ad-form input,
+            .ad-form textarea { font-size: 18px; padding: 18px 20px; }
+            .ad-form button { font-size: 18px; padding: 16px 64px; }
+
+            footer { font-size: 17px; padding: 40px; }
+        }
+
+        /* ══════════════════════════════════════
+           Full HD  (1280px – 2559px)  — базовые стили уже FHD
+        ══════════════════════════════════════ */
+
+        /* ══════════════════════════════════════
+           Планшет  (769px – 1279px)
+        ══════════════════════════════════════ */
+        @media (max-width: 1279px) and (min-width: 769px) {
+            .container { max-width: 960px; }
+
+            header { padding: 14px 32px; }
+            .navigation { gap: 20px; }
+
+            .cover { padding: 60px 32px; }
+            .cover__text h1 { font-size: clamp(56px, 7vw, 90px); }
+            .cover__text p  { font-size: 18px; }
+            .cover-btns a   { font-size: 17px; padding: 16px 40px; }
+
+            section { padding: 60px 32px; }
+            .section-title { font-size: 40px; }
+
+            .cards { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+
+            .top > .container > div[style] {
+                grid-template-columns: repeat(3, 1fr) !important;
+            }
+
+            .ad-form { max-width: 480px; }
+        }
+
+        /* ══════════════════════════════════════
+           Мобильный  (≤ 768px)
+        ══════════════════════════════════════ */
+        @media (max-width: 768px) {
+
+            /* Header */
+            header {
+                padding: 12px 16px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .header__logo { font-size: 17px; }
+            .header__logo svg { width: 26px; height: 26px; }
+
+            /* Hamburger nav — скрываем по умолчанию, показываем через toggle */
+            .navigation {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: rgba(20,20,30,0.97);
+                padding: 12px 0 16px;
+                gap: 4px;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+            .navigation.open { display: flex; }
+            .navigation__item { width: 100%; }
+            .navigation__link {
+                display: block;
+                padding: 10px 20px;
+                border-radius: 0;
+                font-size: 16px;
+                width: 100%;
+            }
+
+            .burger-btn {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                cursor: pointer;
+                padding: 6px;
+                background: none;
+                border: none;
+            }
+            .burger-btn span {
+                display: block;
+                width: 24px;
+                height: 2px;
+                background: #fff;
+                border-radius: 2px;
+                transition: 0.3s;
+            }
+
+            /* Cover */
+            .cover {
+                padding: 40px 20px;
+                min-height: 100svh;
+                align-items: flex-start;
+                padding-top: 80px;
+            }
+            .cover__text { gap: 16px; }
+            .cover__text h1 { font-size: clamp(36px, 10vw, 56px); line-height: 1.08; }
+            .cover__text p  { font-size: 15px; max-width: 100%; }
+            .cover-btns { flex-direction: column; gap: 10px; width: 100%; }
+            .cover-btns a {
+                font-size: 16px;
+                padding: 15px 28px;
+                text-align: center;
+                width: 100%;
+            }
+
+            /* Sections */
+            section { padding: 48px 20px; }
+            .section-title { font-size: 30px; margin-bottom: 24px; }
+
+            /* Story */
+            .story__text h2 { font-size: 26px; }
+            .story__text p  { font-size: 14px; }
+            .carousel__item > div { width: 200px !important; height: 130px !important; }
+
+            /* Places tabs */
+            .tab-btn { font-size: 13px; padding: 10px 8px; }
+            .cards { grid-template-columns: 1fr; gap: 16px; }
+            .card img,
+            .card > div:first-child { height: 180px !important; font-size: 36px !important; }
+            .card-body h4 { font-size: 16px; }
+
+            /* Reviews */
+            .review-block .card { margin-bottom: 12px; }
+            .review { padding: 12px 14px; gap: 10px; }
+            .review__person { width: 38px; height: 38px; }
+            .reviews__text p { font-size: 13px; }
+
+            /* Top */
+            .top > .container > div[style] {
+                grid-template-columns: 1fr !important;
+                gap: 32px !important;
+            }
+            .top-medal { font-size: 16px; margin-bottom: 8px; }
+
+            /* Advertising */
+            .advertising .section-title { font-size: 26px; }
+            .ad-form { width: 100%; }
+            .ad-form input,
+            .ad-form textarea { font-size: 15px; padding: 13px 14px; }
+            .ad-form button { font-size: 15px; padding: 13px 40px; }
+
+            /* Modal */
+            .modal { width: 96%; max-height: 92vh; border-radius: 16px; }
+            .modal-body { padding: 20px 20px 24px; }
+            .modal-title { font-size: 20px; }
+
+            /* Footer */
+            footer { padding: 20px; font-size: 13px; }
+        }
+
+        /* ══════════════════════════════════════
+           Малые телефоны  (≤ 390px)
+        ══════════════════════════════════════ */
+        @media (max-width: 390px) {
+            .cover__text h1 { font-size: 32px; }
+            .section-title  { font-size: 26px; }
+            .tab-btn        { font-size: 12px; padding: 8px 4px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <a href="#cover" class="header__logo">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 24 Q8 8 16 8 Q24 8 28 24" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <path d="M8 20 Q12 14 16 14 Q20 14 24 20" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <line x1="4" y1="26" x2="28" y2="26" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        Rating Food
+    </a>
+    <button class="burger-btn" id="burgerBtn" onclick="toggleNav()" aria-label="Меню" style="display:none;">
+        <span></span><span></span><span></span>
+    </button>
+    <nav class="navigation" id="mainNav">
+        <li class="navigation__item"><a href="#cover" class="navigation__link">Главная</a></li>
+        <li class="navigation__item"><a href="#story" class="navigation__link">История</a></li>
+        <li class="navigation__item"><a href="#places" class="navigation__link">Заведения</a></li>
+        <li class="navigation__item"><a href="#reviews" class="navigation__link">Отзывы</a></li>
+        <li class="navigation__item"><a href="#top" class="navigation__link">Топ</a></li>
+        <li class="navigation__item"><a href="#advertising" class="navigation__link">Реклама</a></li>
+    </nav>
+</header>
+
+<!-- COVER -->
+<section class="cover" id="cover">
+    <div class="cover__text">
+        <h1>Рейтинг заведений Ростова-на-Дону</h1>
+        <p>Лучшие места города в одном месте. Ознакомьтесь с мнением других людей о месте, которое вы хотите посетить.</p>
+        <div class="cover-btns">
+            <a href="#top" class="cover__top">К рейтингу</a>
+            <a href="#places" class="cover__places">Заведения</a>
+        </div>
+    </div>
+</section>
+
+<!-- STORY -->
+<section class="story reveal" id="story">
+    <div class="container">
+        <div class="story__text">
+            <h2>История общепита г.Ростова-на-Дону</h2>
+            <p>Гастрономическая культура Ростова развивалась десятилетиями. От куска батона с колбасой — до изысканных блюд с заграничными продуктами.</p>
+        </div>
+        <div class="story__carousel">
+            <div class="carousel__track" id="carouselTrack">
+                <div class="carousel__item"><div style="width:260px;height:160px;border-radius:12px;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-family:'Montserrat',sans-serif;font-weight:600;">1960-е</div></div>
+                <div class="carousel__item"><div style="width:260px;height:160px;border-radius:12px;background:linear-gradient(135deg,#f093fb,#f5576c);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-family:'Montserrat',sans-serif;font-weight:600;">Советские кафе</div></div>
+                <div class="carousel__item"><div style="width:260px;height:160px;border-radius:12px;background:linear-gradient(135deg,#4facfe,#00f2fe);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-family:'Montserrat',sans-serif;font-weight:600;">1990-е</div></div>
+                <div class="carousel__item"><div style="width:260px;height:160px;border-radius:12px;background:linear-gradient(135deg,#43e97b,#38f9d7);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-family:'Montserrat',sans-serif;font-weight:600;">Рынки и фастфуд</div></div>
+                <div class="carousel__item"><div style="width:260px;height:160px;border-radius:12px;background:linear-gradient(135deg,#fa709a,#fee140);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-family:'Montserrat',sans-serif;font-weight:600;">2000-е</div></div>
+                <div class="carousel__item"><div style="width:260px;height:160px;border-radius:12px;background:linear-gradient(135deg,#a18cd1,#fbc2eb);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-family:'Montserrat',sans-serif;font-weight:600;">Рестораны</div></div>
+                <div class="carousel__item"><div style="width:260px;height:160px;border-radius:12px;background:linear-gradient(135deg,#ffecd2,#fcb69f);display:flex;align-items:center;justify-content:center;color:#555;font-size:13px;font-family:'Montserrat',sans-serif;font-weight:600;">2010-е</div></div>
+                <div class="carousel__item"><div style="width:260px;height:160px;border-radius:12px;background:linear-gradient(135deg,#2af598,#009efd);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-family:'Montserrat',sans-serif;font-weight:600;">Гастро-культура</div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PLACES -->
+<section class="places reveal" id="places">
+    <div class="container">
+        <h2 class="section-title">Заведения</h2>
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="slide(0,'places-slider');setActive(this)">Фастфуд</button>
+            <button class="tab-btn" onclick="slide(1,'places-slider');setActive(this)">Кафе</button>
+            <button class="tab-btn" onclick="slide(2,'places-slider');setActive(this)">Рестораны</button>
+        </div>
+        <div class="slider" id="places-slider">
+            <div class="track">
+                <!-- Fastfood -->
+                <div class="slide">
+                    <div class="cards">
+                        <div class="card" onclick="openModal('shawarma')">
+                            <img src="/mnt/user-data/uploads/1778584765954_image.png" alt="Шаурма №1" style="width:100%;height:200px;object-fit:cover;display:block;">
+                            <div class="card-body">
+                                <h4>Шаурма №1</h4>
+                                <div class="rating">⭐⭐⭐⭐☆</div>
+                                <p>Средний чек: 300₽</p>
+                                <p>Быстрый и вкусный перекус</p>
+                            </div>
+                        </div>
+                        <div class="card" onclick="openModal('vkusno')">
+                            <img src="/mnt/user-data/uploads/1778584792948_image.png" alt="Вкусно и точка" style="width:100%;height:200px;object-fit:cover;display:block;">
+                            <div class="card-body">
+                                <h4>Вкусно и точка</h4>
+                                <div class="rating">⭐⭐⭐⭐⭐</div>
+                                <p>Средний чек: 456₽</p>
+                                <p>Бессмертная классика, быстро и дешево</p>
+                            </div>
+                        </div>
+                        <div class="card" onclick="openModal('kfc')">
+                            <img src="/mnt/user-data/uploads/1778584807567_image.png" alt="KFC | Rostics" style="width:100%;height:200px;object-fit:cover;display:block;">
+                            <div class="card-body">
+                                <h4>KFC | Rostics</h4>
+                                <div class="rating">⭐⭐⭐⭐☆</div>
+                                <p>Средний чек: 390₽</p>
+                                <p>Любителям курицы очень зайдет</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Cafe -->
+                <div class="slide">
+                    <div class="cards">
+                        <div class="card" onclick="openModal('urban')">
+                            <img src="/mnt/user-data/uploads/1778584883126_image.png" alt="Urban Cafe" style="width:100%;height:200px;object-fit:cover;display:block;">
+                            <div class="card-body">
+                                <h4>Urban Cafe</h4>
+                                <div class="rating">⭐⭐⭐⭐⭐</div>
+                                <p>Средний чек: 900₽</p>
+                                <p>Современное уютное кафе</p>
+                            </div>
+                        </div>
+                        <div class="card" onclick="openModal('koluchka')">
+                            <img src="/mnt/user-data/uploads/1778584765954_image.png" alt="Колючка" style="width:100%;height:200px;object-fit:cover;display:block;">
+                            <div class="card-body">
+                                <h4>Колючка</h4>
+                                <div class="rating">⭐⭐⭐⭐⭐</div>
+                                <p>Средний чек: 800₽</p>
+                                <p>Веганское меню и никакого мяса</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Restaurant -->
+                <div class="slide">
+                    <div class="cards">
+                        <div class="card" onclick="openModal('don')">
+                            <img src="/mnt/user-data/uploads/1778584792948_image.png" alt="Ресторан Дон" style="width:100%;height:200px;object-fit:cover;display:block;">
+                            <div class="card-body">
+                                <h4>Ресторан Дон</h4>
+                                <div class="rating">⭐⭐⭐⭐⭐</div>
+                                <p>Средний чек: 2000₽</p>
+                                <p>Премиум кухня и сервис</p>
+                            </div>
+                        </div>
+                        <div class="card" onclick="openModal('magadan')">
+                            <img src="/mnt/user-data/uploads/1778584807567_image.png" alt="Magadan" style="width:100%;height:200px;object-fit:cover;display:block;">
+                            <div class="card-body">
+                                <h4>Magadan</h4>
+                                <div class="rating">⭐⭐⭐⭐⭐</div>
+                                <p>Средний чек: 2240₽</p>
+                                <p>Персонал высшего уровня</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews reveal" id="reviews">
+    <div class="container">
+        <h2 class="section-title">Отзывы</h2>
+
+        <div class="review-block">
+            <div class="card" onclick="openModal('shawarma')" style="margin-bottom:16px;">
+                <img src="/mnt/user-data/uploads/1778584765954_image.png" alt="Шаурма №1" style="width:100%;height:200px;object-fit:cover;display:block;">
+                <div class="card-body"><h4>Шаурма №1</h4><div class="rating">⭐⭐⭐⭐☆</div><p>Средний чек: 300₽</p></div>
+            </div>
+            <div class="review"><img src="https://i.pravatar.cc/44?img=1" alt="" class="review__person"><div class="reviews__text"><p>🔥 Очень вкусно! Приготовили быстро, торопились на собрание</p></div></div>
+            <div class="review"><img src="https://i.pravatar.cc/44?img=5" alt="" class="review__person"><div class="reviews__text"><p>Понравилось место, внутри всё аккуратно и детям зашло</p></div></div>
+            <div class="review"><img src="https://i.pravatar.cc/44?img=9" alt="" class="review__person"><div class="reviews__text"><p>Было бы всё на 5, но очень большая очередь была</p></div></div>
+        </div>
+
+        <div class="review-block">
+            <div class="card" onclick="openModal('vkusno')" style="margin-bottom:16px;">
+                <img src="/mnt/user-data/uploads/1778584792948_image.png" alt="Вкусно и точка" style="width:100%;height:200px;object-fit:cover;display:block;">
+                <div class="card-body"><h4>Вкусно и точка</h4><div class="rating">⭐⭐⭐⭐⭐</div><p>Средний чек: 456₽</p></div>
+            </div>
+            <div class="review"><img src="https://i.pravatar.cc/44?img=12" alt="" class="review__person"><div class="reviews__text"><p>Классика! Беру бургер и картошку каждую пятницу уже год</p></div></div>
+            <div class="review"><img src="https://i.pravatar.cc/44?img=15" alt="" class="review__person"><div class="reviews__text"><p>Дёшево и сердито. Для перекуса в обед — идеально</p></div></div>
+            <div class="review"><img src="https://i.pravatar.cc/44?img=18" alt="" class="review__person"><div class="reviews__text"><p>Порции приличные, не голодным уходишь точно</p></div></div>
+        </div>
+
+        <div class="review-block">
+            <div class="card" onclick="openModal('urban')" style="margin-bottom:16px;">
+                <img src="/mnt/user-data/uploads/1778584807567_image.png" alt="Urban Cafe" style="width:100%;height:200px;object-fit:cover;display:block;">
+                <div class="card-body"><h4>Urban Cafe</h4><div class="rating">⭐⭐⭐⭐⭐</div><p>Средний чек: 900₽</p></div>
+            </div>
+            <div class="review"><img src="https://i.pravatar.cc/44?img=22" alt="" class="review__person"><div class="reviews__text"><p>Лучший кофе в городе, без преувеличений. Атмосфера потрясающая</p></div></div>
+            <div class="review"><img src="https://i.pravatar.cc/44?img=25" alt="" class="review__person"><div class="reviews__text"><p>Работал тут с ноутбуком 4 часа, никто не беспокоил. Wifi отличный</p></div></div>
+            <div class="review"><img src="https://i.pravatar.cc/44?img=28" alt="" class="review__person"><div class="reviews__text"><p>Авокадо-тост просто огонь 🔥 Обязательно вернусь</p></div></div>
+        </div>
+
+        <div class="review-block">
+            <div class="card" onclick="openModal('magadan')" style="margin-bottom:16px;">
+                <img src="/mnt/user-data/uploads/1778584883126_image.png" alt="Magadan" style="width:100%;height:200px;object-fit:cover;display:block;">
+                <div class="card-body"><h4>Magadan</h4><div class="rating">⭐⭐⭐⭐⭐</div><p>Средний чек: 2240₽</p></div>
+            </div>
+            <div class="review"><img src="https://i.pravatar.cc/44?img=32" alt="" class="review__person"><div class="reviews__text"><p>Отмечали годовщину — всё было безупречно. Персонал — высший класс</p></div></div>
+            <div class="review"><img src="https://i.pravatar.cc/44?img=35" alt="" class="review__person"><div class="reviews__text"><p>Морепродукты свежайшие, видно что следят за качеством</p></div></div>
+            <div class="review"><img src="https://i.pravatar.cc/44?img=38" alt="" class="review__person"><div class="reviews__text"><p>Дорого, но каждая копейка оправдана. Лучший ресторан Ростова</p></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- TOP -->
+<section class="top reveal" id="top">
+    <div class="container">
+        <h2 class="section-title">Топ заведений</h2>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start;">
+            <div style="display:flex;flex-direction:column;height:100%;">
+                <p class="top-medal" style="margin-top:0;">🥇 Magadan</p>
+                <div class="card" onclick="openModal('magadan')" style="flex:1;">
+                    <div style="width:100%;height:180px;background:linear-gradient(135deg,#2c3e50,#bdc3c7);display:flex;align-items:center;justify-content:center;font-size:60px;">🦐</div>
+                    <div class="card-body"><h4>Magadan</h4><div class="rating">⭐⭐⭐⭐⭐</div><p>Средний чек: 2240₽</p><p>Персонал высшего уровня и еда из заграничных продуктов</p></div>
+                </div>
+            </div>
+            <div style="display:flex;flex-direction:column;height:100%;">
+                <p class="top-medal" style="margin-top:0;">🥈 Urban Cafe</p>
+                <div class="card" onclick="openModal('urban')" style="flex:1;">
+                    <div style="width:100%;height:180px;background:linear-gradient(135deg,#2c3e50,#3498db);display:flex;align-items:center;justify-content:center;font-size:60px;">☕</div>
+                    <div class="card-body"><h4>Urban Cafe</h4><div class="rating">⭐⭐⭐⭐⭐</div><p>Средний чек: 900₽</p><p>Современное уютное кафе</p></div>
+                </div>
+            </div>
+            <div style="display:flex;flex-direction:column;height:100%;">
+                <p class="top-medal" style="margin-top:0;">🥉 Шаурма №1</p>
+                <div class="card" onclick="openModal('shawarma')" style="flex:1;">
+                    <div style="width:100%;height:180px;background:linear-gradient(135deg,#ff6b35,#f7931e);display:flex;align-items:center;justify-content:center;font-size:60px;">🌯</div>
+                    <div class="card-body"><h4>Шаурма №1</h4><div class="rating">⭐⭐⭐⭐☆</div><p>Средний чек: 300₽</p><p>Быстрый и вкусный перекус</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ADVERTISING -->
+<section class="advertising reveal" id="advertising">
+    <div class="container">
+        <h2 class="section-title">Закажите рекламу у нас</h2>
+        <div class="ad-form">
+            <input id="adName" placeholder="Имя">
+            <input id="adEmail" placeholder="Email" type="email">
+            <textarea id="adMsg" placeholder="Сообщение"></textarea>
+            <button onclick="submitAd()">Отправить</button>
+        </div>
+    </div>
+</section>
+
+<!-- TOAST -->
+<div id="toast" style="
+    position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(80px);
+    background:#1f1f1f;color:#fff;padding:16px 32px;border-radius:50px;
+    font-family:'Montserrat',sans-serif;font-size:15px;font-weight:600;
+    box-shadow:0 8px 32px rgba(0,0,0,0.25);z-index:9999;
+    transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1),opacity 0.3s;
+    opacity:0;pointer-events:none;white-space:nowrap;">
+    ✅ Заявка отправлена! Мы свяжемся с вами.
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2026 Rating Food</p>
+</footer>
+
+<!-- MODAL OVERLAY -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+    <div class="modal" id="modal">
+        <div id="modalContent"></div>
+    </div>
+</div>
+
+<script>
+    /* ── SMOOTH SCROLL ── */
+    document.querySelectorAll('a[href*="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const id = anchor.getAttribute('href').substring(1);
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // close mobile nav on link click
+            document.getElementById('mainNav').classList.remove('open');
+        });
+    });
+
+    /* ── BURGER MENU ── */
+    function toggleNav() {
+        const nav = document.getElementById('mainNav');
+        const btn = document.getElementById('burgerBtn');
+        nav.classList.toggle('open');
+        btn.setAttribute('aria-expanded', nav.classList.contains('open'));
+    }
+
+    function updateBurger() {
+        const btn = document.getElementById('burgerBtn');
+        if (window.innerWidth <= 768) {
+            btn.style.display = 'flex';
+        } else {
+            btn.style.display = 'none';
+            document.getElementById('mainNav').classList.remove('open');
+        }
+    }
+    updateBurger();
+    window.addEventListener('resize', updateBurger);
+
+    /* ── SLIDER ── */
+    function slide(i, id) {
+        document.querySelector('#' + id + ' .track').style.transform = `translateX(-${i * 100}%)`;
+    }
+
+    function setActive(btn) {
+        btn.closest('.tab-buttons').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    /* ── REVEAL ── */
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    /* ── CAROUSEL ── */
+    (() => {
+        const wrapper = document.getElementById('carouselTrack');
+        if (!wrapper) return;
+        wrapper.innerHTML += wrapper.innerHTML;
+        let speed = 1.5, position = 0;
+        wrapper.parentElement.addEventListener('mouseenter', () => speed = 0.6);
+        wrapper.parentElement.addEventListener('mouseleave', () => speed = 1.5);
+        function animate() {
+            position -= speed;
+            if (Math.abs(position) >= wrapper.scrollWidth / 2) position = 0;
+            wrapper.style.transform = `translateX(${position}px)`;
+            requestAnimationFrame(animate);
+        }
+        animate();
+    })();
+
+    /* ── MODAL DATA ── */
+    const places = {
+        shawarma: {
+            emoji: '🌯',
+            bg: 'linear-gradient(135deg,#ff6b35,#f7931e)',
+            name: 'Шаурма №1',
+            rating: '⭐⭐⭐⭐☆',
+            check: '300₽',
+            tags: ['Фастфуд', 'Халяль', 'Навынос'],
+            desc: 'Шаурма №1 — легендарное место в центре Ростова-на-Дону, работающее с 2008 года. Фирменный рецепт маринада хранится в секрете и передаётся от повара к повару. Здесь используется только свежее мясо от местных поставщиков, а лаваш выпекается прямо на месте каждые 2 часа. Небольшое уютное заведение с открытой кухней позволяет наблюдать за приготовлением вашего заказа. Особенно популярна шаурма с двойным соусом и добавкой корейской моркови.',
+            reviews: [
+                { img: 'https://i.pravatar.cc/44?img=1', text: '🔥 Очень вкусно! Приготовили быстро, торопились на собрание' },
+                { img: 'https://i.pravatar.cc/44?img=5', text: 'Понравилось место, внутри всё аккуратно и детям зашло' },
+                { img: 'https://i.pravatar.cc/44?img=9', text: 'Было бы всё на 5, но очень большая очередь была' },
+            ]
+        },
+        vkusno: {
+            emoji: '🍔',
+            bg: 'linear-gradient(135deg,#c0392b,#922b21)',
+            name: 'Вкусно и точка',
+            rating: '⭐⭐⭐⭐⭐',
+            check: '456₽',
+            tags: ['Фастфуд', 'Комбо', 'Детское меню'],
+            desc: 'Легендарная сеть быстрого питания, знакомая каждому. Несмотря на смену вывески, качество классических бургеров осталось неизменным. Ростовский филиал на Большой Садовой — один из самых посещаемых в городе: ежедневно его навещают более 1 200 гостей. Недавно обновлённый интерьер создаёт более комфортную атмосферу, а расширенное меню включает региональные специалитеты — например, шашлычный бургер с донскими специями.',
+            reviews: [
+                { img: 'https://i.pravatar.cc/44?img=12', text: 'Классика! Беру бургер и картошку каждую пятницу уже год' },
+                { img: 'https://i.pravatar.cc/44?img=15', text: 'Дёшево и сердито. Для перекуса в обед — идеально' },
+                { img: 'https://i.pravatar.cc/44?img=18', text: 'Порции приличные, не голодным уходишь точно' },
+            ]
+        },
+        kfc: {
+            emoji: '🍗',
+            bg: 'linear-gradient(135deg,#e74c3c,#f39c12)',
+            name: 'KFC | Rostics',
+            rating: '⭐⭐⭐⭐☆',
+            check: '390₽',
+            tags: ['Фастфуд', 'Курица', 'Доставка'],
+            desc: 'Международная сеть, специализирующаяся на жареной курице с фирменной хрустящей корочкой по рецепту из 11 специй. Ростовское отделение отличается особенно приветливым персоналом и чистотой зала. В 2024 году здесь появился обновлённый ассортимент стрипсов и сэндвичей. Вечером по пятницам действует акция "Ведро дня" — 12 кусочков по цене 8. Рядом удобная парковка на 30 мест.',
+            reviews: [
+                { img: 'https://i.pravatar.cc/44?img=20', text: 'Хрустящая курочка как всегда на высоте!' },
+                { img: 'https://i.pravatar.cc/44?img=23', text: 'Очень понравились новые стрипсы со сливочным соусом' },
+                { img: 'https://i.pravatar.cc/44?img=26', text: 'Акция "Ведро" — просто находка для компании' },
+            ]
+        },
+        urban: {
+            emoji: '☕',
+            bg: 'linear-gradient(135deg,#2c3e50,#3498db)',
+            name: 'Urban Cafe',
+            rating: '⭐⭐⭐⭐⭐',
+            check: '900₽',
+            tags: ['Кафе', 'Specialty кофе', 'Завтраки'],
+            desc: 'Urban Cafe открылся в 2019 году и с первых дней стал точкой притяжения для ростовской творческой молодёжи и удалённых работников. Интерьер выполнен в стиле лофт с живыми растениями и панорамными окнами. Кофе готовится на зерне собственной обжарки из Эфиопии и Колумбии. Меню завтраков доступно весь день: яйца бенедикт, гранола с ягодами, авокадо-тост. По выходным проводятся живые джазовые сеты.',
+            reviews: [
+                { img: 'https://i.pravatar.cc/44?img=22', text: 'Лучший кофе в городе, без преувеличений. Атмосфера потрясающая' },
+                { img: 'https://i.pravatar.cc/44?img=25', text: 'Работал тут с ноутбуком 4 часа, никто не беспокоил. Wifi отличный' },
+                { img: 'https://i.pravatar.cc/44?img=28', text: 'Авокадо-тост просто огонь 🔥 Обязательно вернусь' },
+            ]
+        },
+        koluchka: {
+            emoji: '🌿',
+            bg: 'linear-gradient(135deg,#27ae60,#2ecc71)',
+            name: 'Колючка',
+            rating: '⭐⭐⭐⭐⭐',
+            check: '800₽',
+            tags: ['Кафе', 'Веган', 'Без глютена'],
+            desc: 'Первое полностью веганское кафе Ростова-на-Дону, открытое в 2021 году двумя подругами-активистками. Меню обновляется каждый сезон в зависимости от местных органических поставщиков. Особую популярность приобрёл "Бургер из чечевицы" и том-ям на кокосовом молоке. В кафе действует система zero-waste: вся упаковка биоразлагаемая, а кофейная гуща отправляется на компост. Часть дохода перечисляется в фонд защиты животных Ростовской области.',
+            reviews: [
+                { img: 'https://i.pravatar.cc/44?img=30', text: 'Не верила, что веганская еда может быть настолько вкусной!' },
+                { img: 'https://i.pravatar.cc/44?img=33', text: 'Порции большие, цены честные. Буду рекомендовать всем друзьям' },
+                { img: 'https://i.pravatar.cc/44?img=36', text: 'Приятно, что даже упаковка экологичная. Осознанный бизнес' },
+            ]
+        },
+        don: {
+            emoji: '🍽️',
+            bg: 'linear-gradient(135deg,#1a1a2e,#16213e)',
+            name: 'Ресторан Дон',
+            rating: '⭐⭐⭐⭐⭐',
+            check: '2000₽',
+            tags: ['Ресторан', 'Русская кухня', 'Живая музыка'],
+            desc: 'Ресторан Дон — символ гастрономического Ростова с 1994 года. Расположен в историческом здании в двух шагах от набережной реки Дон. Шеф-повар Артём Власов дважды входил в список лучших шеф-поваров юга России. Меню строится на донской и казачьей кулинарной традиции: ухa по-казачьи, жареный судак с соусом из хрена, пельмени ручной лепки. По пятницам и субботам выступает живой оркестр. Есть банкетный зал на 60 персон.',
+            reviews: [
+                { img: 'https://i.pravatar.cc/44?img=40', text: 'Уха просто потрясающая — как у бабушки в детстве, но в 10 раз лучше' },
+                { img: 'https://i.pravatar.cc/44?img=43', text: 'Отмечали юбилей, всё прошло идеально. Спасибо персоналу!' },
+                { img: 'https://i.pravatar.cc/44?img=46', text: 'Живая музыка создаёт особую атмосферу. Приду ещё' },
+            ]
+        },
+        magadan: {
+            emoji: '🦐',
+            bg: 'linear-gradient(135deg,#2c3e50,#bdc3c7)',
+            name: 'Magadan',
+            rating: '⭐⭐⭐⭐⭐',
+            check: '2240₽',
+            tags: ['Ресторан', 'Морепродукты', 'Premium'],
+            desc: 'Magadan — флагман ростовской ресторанной сцены, лауреат премии "Лучший ресторан юга России 2023". Специализируется на дальневосточных морепродуктах: краб, гребешок, морской ёж и устрицы доставляются прямыми рейсами из Владивостока дважды в неделю. Интерьер сочетает минимализм и роскошь: тёмный мрамор, латунные акценты, вид на ночной город. Сомелье с 15-летним стажем поможет подобрать вино к любому блюду. Обязательна предварительная бронь.',
+            reviews: [
+                { img: 'https://i.pravatar.cc/44?img=32', text: 'Отмечали годовщину — всё было безупречно. Персонал — высший класс' },
+                { img: 'https://i.pravatar.cc/44?img=35', text: 'Морепродукты свежайшие, видно что следят за качеством' },
+                { img: 'https://i.pravatar.cc/44?img=38', text: 'Дорого, но каждая копейка оправдана. Лучший ресторан Ростова' },
+            ]
+        }
+    };
+
+    function openModal(id) {
+        const p = places[id];
+        if (!p) return;
+        const overlay = document.getElementById('modalOverlay');
+        document.getElementById('modalContent').innerHTML = `
+            <div style="width:100%;height:220px;background:${p.bg};display:flex;align-items:center;justify-content:center;font-size:72px;border-radius:20px 20px 0 0;">${p.emoji}</div>
+            <div class="modal-body">
+                <div class="modal-header">
+                    <div>
+                        <div class="modal-title">${p.name}</div>
+                        <div class="modal-rating">${p.rating}</div>
+                    </div>
+                    <button class="modal-close" onclick="closeModal()">✕</button>
+                </div>
+                <div class="modal-meta">
+                    <span class="modal-tag">💰 ${p.check}</span>
+                    ${p.tags.map(t => `<span class="modal-tag">${t}</span>`).join('')}
+                </div>
+                <p class="modal-desc">${p.desc}</p>
+                <div class="modal-section-title">Отзывы посетителей</div>
+                <div class="modal-reviews">
+                    ${p.reviews.map(r => `
+                        <div class="review">
+                            <img src="${r.img}" alt="" class="review__person">
+                            <div class="reviews__text"><p>${r.text}</p></div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        const overlay = document.getElementById('modalOverlay');
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    function closeModalOutside(e) {
+        if (e.target === document.getElementById('modalOverlay')) closeModal();
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    /* ── AD FORM ── */
+    function submitAd() {
+        const name  = document.getElementById('adName').value.trim();
+        const email = document.getElementById('adEmail').value.trim();
+        const msg   = document.getElementById('adMsg').value.trim();
+
+        if (!name || !email || !msg) {
+            showToast('⚠️ Заполните все поля формы', '#e74c3c');
+            return;
+        }
+        const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRe.test(email)) {
+            showToast('⚠️ Введите корректный Email', '#e74c3c');
+            return;
+        }
+
+        document.getElementById('adName').value  = '';
+        document.getElementById('adEmail').value = '';
+        document.getElementById('adMsg').value   = '';
+        showToast('✅ Заявка отправлена! Мы свяжемся с вами.', '#1f1f1f');
+    }
+
+    function showToast(text, bg) {
+        const t = document.getElementById('toast');
+        t.textContent = text;
+        t.style.background = bg;
+        t.style.opacity = '1';
+        t.style.transform = 'translateX(-50%) translateY(0)';
+        clearTimeout(t._timer);
+        t._timer = setTimeout(() => {
+            t.style.opacity = '0';
+            t.style.transform = 'translateX(-50%) translateY(80px)';
+        }, 3500);
+    }
+</script>
+</body>
+</html>
